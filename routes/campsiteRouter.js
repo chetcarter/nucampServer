@@ -19,7 +19,7 @@ campsiteRouter
 			})
 			.catch((err) => next(err));
 	})
-	.post(authenticate.verifyUser, (req, res, next) => {
+	.post(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
 		Campsite.create(req.body)
 			.then((campsite) => {
 				console.log('Campsite Created ', campsite);
@@ -33,7 +33,7 @@ campsiteRouter
 		res.statusCode = 403;
 		res.end('PUT operation not supported on /campsites');
 	})
-	.delete(authenticate.verifyUser, (req, res, next) => {
+	.delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
 		Campsite.deleteMany()
 			.then((response) => {
 				res.statusCode = 200;
@@ -61,7 +61,7 @@ campsiteRouter
 			`POST operation not supported on /campsites/${req.params.campsiteId}`
 		);
 	})
-	.put(authenticate.verifyUser, (req, res, next) => {
+	.put(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
 		Campsite.findByIdAndUpdate(
 			req.params.campsiteId,
 			{
@@ -76,7 +76,7 @@ campsiteRouter
 			})
 			.catch((err) => next(err));
 	})
-	.delete(authenticate.verifyUser, (req, res, next) => {
+	.delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
 		Campsite.findByIdAndDelete(req.params.campsiteId)
 			.then((response) => {
 				res.statusCode = 200;
@@ -132,7 +132,7 @@ campsiteRouter
 			`PUT operation not supported on /campsites/${req.params.campsiteId}/comments`
 		);
 	})
-	.delete(authenticate.verifyUser, (req, res, next) => {
+	.delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
 		Campsite.findById(req.params.campsiteId)
 			.then((campsite) => {
 				if (campsite) {
