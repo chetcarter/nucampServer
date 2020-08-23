@@ -188,7 +188,6 @@ campsiteRouter
 			Campsite.findById(req.params.campsiteId)
 			.then((campsite) => {
 				if (campsite && campsite.comments.id(req.params.commentId)) {
-					console.log("author", (campsite.comments.id(req.params.commentId)).author._id, req.user._id, ((campsite.comments.id(req.params.commentId)).author._id).equals(req.user._id));
 					if (((campsite.comments.id(req.params.commentId)).author._id).equals(req.user._id)) {
 					}	else {
 							err = new Error('User is not authorized!');
