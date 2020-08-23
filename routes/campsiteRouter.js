@@ -185,9 +185,16 @@ campsiteRouter
 		);
 	})
 	.put(authenticate.verifyUser, (req, res, next) => {
-		Campsite.findById(req.params.campsiteId)
+			Campsite.findById(req.params.campsiteId)
 			.then((campsite) => {
 				if (campsite && campsite.comments.id(req.params.commentId)) {
+					console.log("author", (campsite.comments.id(req.params.commentId)).author._id, req.user._id, ((campsite.comments.id(req.params.commentId)).author._id).equals(req.user._id));
+					if (((campsite.comments.id(req.params.commentId)).author._id).equals(req.user._id)) {
+					}	else {
+							err = new Error('User is not authorized!');
+							err.status = 403;
+							return next(err);
+						}
 					if (req.body.rating) {
 						campsite.comments.id(req.params.commentId).rating = req.body.rating;
 					}
@@ -218,6 +225,12 @@ campsiteRouter
 		Campsite.findById(req.params.campsiteId)
 			.then((campsite) => {
 				if (campsite && campsite.comments.id(req.params.commentId)) {
+					if (((campsite.comments.id(req.params.commentId)).author._id).equals(req.user._id)) {
+					}	else {
+							err = new Error('User is not authorized!');
+							err.status = 403;
+							return next(err);
+						}
 					campsite.comments.id(req.params.commentId).remove();
 					campsite
 						.save()
