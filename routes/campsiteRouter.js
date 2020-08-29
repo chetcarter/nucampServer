@@ -96,12 +96,12 @@ campsiteRouter
 				},
 				{ new: true }
 			)
-				.then((campsite) => {
-					res.statusCode = 200;
-					res.setHeader('Content-Type', 'application/json');
-					res.json(campsite);
-				})
-				.catch((err) => next(err));
+			.then((campsite) => {
+				res.statusCode = 200;
+				res.setHeader('Content-Type', 'application/json');
+				res.json(campsite);
+			})
+			.catch((err) => next(err));
 		}
 	)
 	.delete(
